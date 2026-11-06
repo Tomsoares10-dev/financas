@@ -24,6 +24,7 @@
   --accent:#E3A21A;--accent-ink:#1E1A0C;
   --pos:#1E7A54;--neg:#B5432E;--save:#3B5BA5;--warn:#9E6D06;
   --radius:14px;
+  --bar-pos:#1E7A54;--bar-neg:#B5432E;
   color-scheme:light;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
@@ -34,6 +35,7 @@
     --bg:#0D1817;--surface:#142322;--ink:#E4EDEB;--muted:#93A6A3;--line:#26393A;--soft:#1C2E2D;
     --accent:#EDB23C;--accent-ink:#1E1A0C;
     --pos:#4DBE8A;--neg:#E7735C;--save:#8DA5EA;--warn:#E3B34F;
+    --bar-pos:#36A06F;--bar-neg:#D66049;
     color-scheme:dark;
   }
 }
@@ -41,6 +43,7 @@
   --bg:#0D1817;--surface:#142322;--ink:#E4EDEB;--muted:#93A6A3;--line:#26393A;--soft:#1C2E2D;
   --accent:#EDB23C;--accent-ink:#1E1A0C;
   --pos:#4DBE8A;--neg:#E7735C;--save:#8DA5EA;--warn:#E3B34F;
+  --bar-pos:#36A06F;--bar-neg:#D66049;
   color-scheme:dark;
 }
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -335,6 +338,33 @@ h3.dia{font-size:.86rem;color:var(--muted);font-weight:600;margin:20px 0 8px}
   .link-mes{font-size:.74rem}
   .top-in .ic-btn{width:36px}
 }
+/* planejamento */
+.pl-hero{padding:4px 0 6px}
+.pl-hero .hero-v{font-size:clamp(2.2rem,10vw,3.1rem)}
+.pl-graf{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px;margin:10px 0 2px}
+.pl-col{display:flex;flex-direction:column;height:132px;border:0;background:none;padding:4px 0;cursor:pointer;border-radius:8px;min-width:0}
+.pl-col:hover{background:var(--soft)}
+.pl-col[aria-pressed="true"]{background:var(--soft);box-shadow:inset 0 -3px 0 var(--accent)}
+.pl-area{display:flex;justify-content:center;min-height:0}
+.pl-area.cima{align-items:flex-end}
+.pl-area.baixo{align-items:flex-start}
+.pl-area i{display:block;width:62%;max-width:22px}
+.pl-area.cima i{background:var(--bar-pos);border-radius:4px 4px 0 0}
+.pl-area.baixo i{background:var(--bar-neg);border-radius:0 0 4px 4px}
+.pl-base{height:1px;background:var(--line);flex:none}
+.pl-rot{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px;font-size:.66rem;color:var(--muted);text-align:center;margin-bottom:6px}
+.pl-rot span{overflow:hidden;text-overflow:clip;white-space:nowrap}
+.pl-linha{display:flex;align-items:center;gap:12px;width:100%;background:none;border:0;padding:12px 14px;text-align:left;cursor:pointer}
+.pl-linha:hover{background:var(--soft)}
+.pl-linha[aria-pressed="true"]{background:var(--soft);box-shadow:inset 3px 0 0 var(--accent)}
+.lista>li:first-child .pl-linha{border-radius:var(--radius) var(--radius) 0 0}
+.lista>li:last-child .pl-linha{border-radius:0 0 var(--radius) var(--radius)}
+.pl-linha .txt{flex:1}
+.pl-h{font-size:.95rem;font-weight:700;margin:20px 0 8px;display:flex;align-items:center;gap:8px}
+.pl-vazio{color:var(--muted);font-weight:600}
+.barra.b-rec>span{background:var(--pos)}
+#pl-detalhe{scroll-margin-top:80px}
+
 /* backup */
 .bk-info{background:var(--soft);border-radius:12px;padding:12px 14px;font-size:.92rem}
 .bk-info strong{display:block;margin-bottom:2px}
@@ -455,10 +485,10 @@ const ic={
   minus:svg('<path d="M5 12h14"/>'),
   clip:svg('<path d="M21.4 11.1l-9.2 9.2a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"/>')
 };
-const NAV=[['inicio','Início',ic.home],['dia','Dia a dia',ic.list],['checklist','Checklist',ic.chk],['orcamento','Orçamento',ic.gauge],['contas','Contas',ic.cal],['metas','Metas',ic.target]];
+const NAV=[['inicio','Início',ic.home],['dia','Dia a dia',ic.list],['checklist','Checklist',ic.chk],['plano','Planejamento',ic.gauge,'Plano'],['contas','Contas',ic.cal],['metas','Metas',ic.target]];
 
 /* ---------- estado ---------- */
-const novoConfig=c=>({categorias:(c&&c.categorias)||[],orcamento:(c&&c.orcamento)||{},contas:(c&&c.contas)||[],metas:(c&&c.metas)||[]});
+const novoConfig=c=>({categorias:(c&&c.categorias)||[],orcamento:(c&&c.orcamento)||{},plano:(c&&c.plano&&typeof c.plano==='object')?c.plano:{},contas:(c&&c.contas)||[],metas:(c&&c.metas)||[]});
 const S={ready:false,mode:'loading',config:novoConfig(null),months:{},view:'inicio',ym:ymHoje(),lado:'despesa'};
 
 /* ---------- armazenamento ---------- */
@@ -577,7 +607,7 @@ function shell(){
   $('#side').innerHTML='<p class="brand">Finanças</p><div class="novos"><button class="btn" data-action="nova-desp">'+ic.minus+' Nova despesa</button><button class="btn btn-rec" data-action="nova-rec">'+ic.plus+' Nova receita</button></div>'+
     NAV.map(([v,l,i])=>'<button class="navb" data-action="nav" data-view="'+v+'">'+i+l+'</button>').join('')+
     '<div class="side-pe"><button class="side-link" data-action="categorias">'+ic.tag+'Categorias</button><button class="side-link" data-action="backup">'+ic.bk+'Backup</button><p class="sync" id="sync"></p></div>';
-  $('#tabs').innerHTML=NAV.map(([v,l,i])=>'<button class="navb" data-action="nav" data-view="'+v+'">'+i+'<span>'+l+'</span></button>').join('');
+  $('#tabs').innerHTML=NAV.map(([v,l,i,c])=>'<button class="navb" data-action="nav" data-view="'+v+'">'+i+'<span>'+(c||l)+'</span></button>').join('');
   $('#top').innerHTML='<div class="mes"><button class="ic-btn" data-action="mes-ant" aria-label="Mês anterior">'+ic.left+'</button><p class="mes-l" id="mes-l" aria-live="polite"></p><button class="ic-btn" data-action="mes-prox" aria-label="Próximo mês">'+ic.right+'</button></div>'+
     '<button class="link link-mes" id="mes-hoje" data-action="mes-hoje">Mês atual</button>'+
     '<button class="ic-btn m-only" data-action="categorias" aria-label="Categorias">'+ic.tag+'</button>'+
@@ -771,7 +801,110 @@ function vCheck(){
   return h+'<ul class="lista painel">'+linhas+'</ul><p class="dica topo">Toque numa despesa para marcar como paga'+(store.assets?' e anexar o comprovante':'')+'.</p>';
 }
 
-const VIEWS={inicio:vInicio,dia:vDia,checklist:vCheck,orcamento:vOrc,contas:vContas,metas:vMetas};
+/* ---------- planejamento ---------- */
+function planoVal(ym,catId){
+  const m=S.config.plano[ym];
+  if(m&&Object.prototype.hasOwnProperty.call(m,catId))return m[catId]==null?null:Number(m[catId]);
+  const c=catById(catId),l=S.config.orcamento[catId];
+  return c&&c.tipo==='despesa'&&l>0?l:null;
+}
+function realizado(ym){const r={};for(const t of lancs(ym))if((t.tipo==='receita'||t.tipo==='despesa')&&t.catId)r[t.catId]=(r[t.catId]||0)+t.valor;return r}
+function resumoPlano(ym){
+  let rec=0,desp=0,tem=false;
+  for(const c of S.config.categorias){const v=planoVal(ym,c.id);if(v==null)continue;tem=true;if(c.tipo==='receita')rec+=v;else desp+=v}
+  return {rec,desp,saldo:rec-desp,tem};
+}
+const mesesPlano=()=>{const a=ymHoje(),r=[];for(let i=0;i<12;i++)r.push(addM(a,i));return r};
+const num2=v=>new Intl.NumberFormat('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(v);
+const sinalMoney=v=>(v>0?'+ ':v<0?'− ':'')+money(Math.abs(v));
+function linhaPlano(c,ym,real){
+  const prev=planoVal(ym,c.id),lanc=real[c.id]||0,ehR=c.tipo==='receita';
+  const dot='<span class="dot" style="background:'+c.cor+'"></span>';
+  if(prev==null&&!lanc)return '<li><button class="orc-btn" data-action="plano-cat" data-id="'+c.id+'" data-ym="'+ym+'"><span class="orc-top"><span class="nome">'+dot+esc(c.nome)+'</span><span class="pl-vazio">Planejar</span></span></button></li>';
+  const p=prev||0,dif=p-lanc;
+  let txt;
+  if(!p)txt='Sem previsão';
+  else if(ehR)txt=dif>0.004?'Faltam entrar '+money(dif):dif<-0.004?'Entrou '+money(-dif)+' a mais':'Entrou o previsto';
+  else txt=dif>0.004?'Faltam '+money(dif):dif<-0.004?'Passou '+money(-dif):'Gastou o previsto';
+  return '<li><button class="orc-btn" data-action="plano-cat" data-id="'+c.id+'" data-ym="'+ym+'"><span class="orc-top"><span class="nome">'+dot+esc(c.nome)+'</span><span class="val">'+(prev==null?'<small>sem previsão</small>':money(p)+' <small>previsto</small>')+'</span></span>'+
+    (p?barra(lanc,p,ehR?'b-rec':''):'')+
+    '<span class="orc-bot"><span>'+(lanc?(ehR?'Entrou ':'Lançado ')+money(lanc):'Nada lançado ainda')+'</span><span class="'+(!ehR&&dif<-0.004?'neg':'')+'">'+txt+'</span></span></button></li>';
+}
+function vPlano(){
+  const cats=S.config.categorias;
+  let h='<div class="vh"><h1>Planejamento</h1></div>';
+  if(!cats.length)return h+'<section class="painel vazio"><h2>Planeje seus próximos meses</h2><p>Crie as categorias de receita e despesa e coloque quanto espera receber e gastar em cada mês.</p><button class="btn" data-action="categorias">Criar categorias</button></section>';
+  const M=mesesPlano(),R=M.map(resumoPlano);
+  const algum=R.some(r=>r.tem);let lista='';
+  if(algum){
+    const tRec=R.reduce((a,r)=>a+r.rec,0),tDesp=R.reduce((a,r)=>a+r.desp,0),tSal=tRec-tDesp;
+    h+='<section class="pl-hero"><p class="hero-l">Sobra prevista em 12 meses ('+mesCurto(M[0])+' a '+mesCurto(M[11])+')</p><p class="hero-v'+(tSal<0?' neg':'')+'">'+sinalMoney(tSal)+'</p><p class="hero-e">Entra '+money(tRec)+' · Sai '+money(tDesp)+'</p></section>';
+    const mxP=Math.max(0,...R.map(r=>r.saldo)),mxN=Math.max(0,...R.map(r=>-r.saldo));
+    const fp=mxP||(mxN?0:1),fn=mxN;
+    h+='<div class="pl-graf" role="group" aria-label="Sobra prevista por mês">'+M.map((ym,i)=>{
+      const r=R[i],hp=r.saldo>0&&mxP?r.saldo/mxP*100:0,hn=r.saldo<0&&mxN?-r.saldo/mxN*100:0;
+      const rot=cap(mesNome(ym))+' de '+ym.slice(0,4)+': '+(r.tem?'sobra prevista '+sinalMoney(r.saldo):'sem planejamento');
+      return '<button class="pl-col" data-action="plano-mes" data-ym="'+ym+'" aria-pressed="'+(ym===S.ym)+'" aria-label="'+rot+'" title="'+rot+'">'+
+        '<span class="pl-area cima" style="flex:'+fp+' 1 0"><i style="height:'+hp.toFixed(1)+'%"></i></span><span class="pl-base"></span>'+
+        '<span class="pl-area baixo" style="flex:'+fn+' 1 0"><i style="height:'+hn.toFixed(1)+'%"></i></span></button>';
+    }).join('')+'</div><div class="pl-rot" aria-hidden="true">'+M.map(ym=>'<span>'+cap(MESES_C[Number(ym.slice(5))-1])+'</span>').join('')+'</div>';
+    lista='<section class="bloco"><div class="bloco-h"><h2>Os próximos 12 meses</h2></div><ul class="lista painel">'+M.map((ym,i)=>{const r=R[i];return '<li><button class="pl-linha" data-action="plano-mes" data-ym="'+ym+'" aria-pressed="'+(ym===S.ym)+'"><span class="txt"><span class="t1">'+cap(mesNome(ym))+' '+ym.slice(0,4)+'</span><span class="t2">'+(r.tem?'Entra '+num2(r.rec)+' · Sai '+num2(r.desp):'Ainda não planejado')+'</span></span><span class="val '+(r.saldo<0?'neg':r.saldo>0?'pos':'')+'">'+(r.tem?sinalMoney(r.saldo):'—')+'</span></button></li>'}).join('')+'</ul></section>';
+  }else{
+    h+='<p class="dica">Escolha o mês com as setas lá em cima e toque numa categoria para colocar quanto espera receber ou gastar. Os próximos 12 meses aparecem aqui num gráfico.</p>';
+  }
+  const ym=S.ym,rp=resumoPlano(ym),real=realizado(ym);
+  const lr=lancs(ym).filter(t=>t.tipo==='receita').reduce((a,t)=>a+t.valor,0),ld=lancs(ym).filter(t=>t.tipo==='despesa').reduce((a,t)=>a+t.valor,0);
+  const rec=cats.filter(c=>c.tipo==='receita'),desp=cats.filter(c=>c.tipo==='despesa');
+  h+='<section class="bloco" id="pl-detalhe"><div class="bloco-h"><h2>Plano de '+mesNome(ym)+' de '+ym.slice(0,4)+'</h2><button class="link" data-action="plano-copiar" data-ym="'+ym+'">Copiar do mês anterior</button></div>'+
+    '<dl class="fluxo"><div><dt><b class="k k-sobra"></b>Entra</dt><dd>'+money(rp.rec)+'</dd></div><div><dt><b class="k k-desp"></b>Sai</dt><dd>'+money(rp.desp)+'</dd></div><div><dt>Sobra</dt><dd class="'+(rp.saldo<0?'neg':'')+'">'+sinalMoney(rp.saldo)+'</dd></div></dl>'+
+    '<p class="dica" style="margin-top:8px">Lançado até agora: entrou '+money(lr)+', saiu '+money(ld)+'.</p>';
+  h+='<h3 class="pl-h"><span class="dot" style="background:var(--pos)"></span>Receitas previstas</h3>'+(rec.length?'<ul class="lista painel">'+rec.map(c=>linhaPlano(c,ym,real)).join('')+'</ul>':'<p class="dica">Nenhuma categoria de receita. <button class="link" data-action="add-cat" data-t="receita">Criar categoria</button></p>');
+  h+='<h3 class="pl-h"><span class="dot" style="background:var(--neg)"></span>Despesas previstas</h3>'+(desp.length?'<ul class="lista painel">'+desp.map(c=>linhaPlano(c,ym,real)).join('')+'</ul>':'<p class="dica">Nenhuma categoria de despesa. <button class="link" data-action="add-cat" data-t="despesa">Criar categoria</button></p>');
+  return h+'</section>'+lista;
+}
+function modalPlano(catId,ym){
+  const c=catById(catId);if(!c)return;
+  const atual=planoVal(ym,catId),lanc=realizado(ym)[catId]||0,fim=mesesPlano()[11],ehR=c.tipo==='receita';
+  const podeRepetir=ym<fim;
+  openModal('<form class="form" novalidate>'+cab(esc(c.nome))+
+    '<p class="dica">'+(ehR?'Receita':'Despesa')+' prevista para '+mesNome(ym)+' de '+ym.slice(0,4)+'. '+(lanc?(ehR?'Já entrou ':'Já lançado: ')+money(lanc)+'.':'Nada lançado ainda.')+'</p>'+
+    '<label class="campo"><span>'+(ehR?'Quanto espera receber':'Quanto espera gastar')+'</span><span class="moeda"><i>R$</i><input name="valor" inputmode="decimal" autocomplete="off" placeholder="0,00" value="'+(atual!=null?valorInput(atual):'')+'" data-foco></span></label>'+
+    (podeRepetir?'<label class="pago-campo"><input type="checkbox" name="rep"><span class="chk-box" aria-hidden="true">'+ic.check+'</span><span>Repetir até '+mesCurto(fim)+'</span></label><p class="dica" data-repdica hidden>Substitui o que já estiver planejado de '+mesCurto(addM(ym,1))+' a '+mesCurto(fim)+'.</p>':'')+
+    '<p class="erro" role="alert" hidden></p>'+
+    '<div class="acoes">'+(atual!=null?'<button type="button" class="btn-perigo" data-del>Limpar</button>':'')+'<button class="btn" type="submit">Salvar previsão</button></div></form>',
+  sheet=>{
+    const f=sheet.querySelector('form'),fail=erroForm(f),rep=el(f,'rep');
+    if(rep)rep.addEventListener('change',()=>{f.querySelector('[data-repdica]').hidden=!rep.checked});
+    f.addEventListener('submit',e=>{
+      e.preventDefault();
+      const raw=el(f,'valor').value.trim();if(!raw)return fail('Digite o valor previsto.');
+      const v=parseValor(raw);if(!(v>=0))return fail('Valor inválido.');
+      const val=Math.round(v*100)/100,P=S.config.plano;
+      const set=m=>{P[m]=P[m]||{};P[m][catId]=val};
+      set(ym);const repetir=!!(rep&&rep.checked);
+      if(repetir){let m=addM(ym,1);while(m<=fim){set(m);m=addM(m,1)}}
+      salvarConfig();closeModal();toast('Previsão salva'+(repetir?' até '+mesCurto(fim):''));
+    });
+    const del=f.querySelector('[data-del]');
+    if(del)del.addEventListener('click',async()=>{
+      if(await confirmar({titulo:'Limpar a previsão de '+c.nome+'?',texto:'Só o valor previsto de '+mesNome(ym)+' de '+ym.slice(0,4)+' ('+money(atual)+') sai do planejamento. Os lançamentos não mudam.',botao:'Limpar previsão'})){
+        const P=S.config.plano;P[ym]=P[ym]||{};P[ym][catId]=null;salvarConfig();closeModal();toast('Previsão removida');
+      }
+    });
+  });
+}
+async function copiarPlano(ym){
+  const ant=addM(ym,-1),cats=S.config.categorias;
+  const src=cats.map(c=>[c.id,planoVal(ant,c.id)]).filter(([,v])=>v!=null);
+  if(!src.length){toast(cap(mesNome(ant))+' não tem planejamento para copiar');return}
+  const temAtual=cats.some(c=>planoVal(ym,c.id)!=null);
+  if(temAtual&&!(await confirmar({titulo:'Copiar o plano de '+mesNome(ant)+'?',texto:'O planejamento de '+mesNome(ym)+' de '+ym.slice(0,4)+' será trocado pelo de '+mesNome(ant)+'. Os lançamentos não mudam.',botao:'Copiar plano',perigo:false})))return;
+  const P=S.config.plano;P[ym]={};
+  for(const c of cats){const v=planoVal(ant,c.id);P[ym][c.id]=v}
+  salvarConfig();toast('Plano de '+mesNome(ant)+' copiado');
+}
+
+const VIEWS={inicio:vInicio,dia:vDia,checklist:vCheck,plano:vPlano,contas:vContas,metas:vMetas};
 function render(){
   chrome();
   const m=$('#main');
@@ -971,10 +1104,11 @@ function modalCategoria(cat,opt){
 async function excluirCategoria(id,voltar){
   const c=catById(id);if(!c)return;
   const usada=Object.keys(S.months).some(ym=>S.months[ym].some(t=>t.catId===id));
-  const ok=await confirmar({titulo:'Excluir a categoria '+c.nome+'?',texto:usada?'As despesas ou receitas dela vão aparecer como Sem categoria, e o limite dela no orçamento será apagado.':'Ela ainda não foi usada.',botao:'Excluir categoria'});
+  const ok=await confirmar({titulo:'Excluir a categoria '+c.nome+'?',texto:usada?'As despesas ou receitas dela vão aparecer como Sem categoria, e o planejamento dela será apagado.':'Ela ainda não foi usada.',botao:'Excluir categoria'});
   if(!ok)return;
   S.config.categorias=S.config.categorias.filter(x=>x.id!==id);
   delete S.config.orcamento[id];
+  for(const m in S.config.plano)if(S.config.plano[m])delete S.config.plano[m][id];
   S.config.contas.forEach(ct=>{if(ct.catId===id)ct.catId=null});
   salvarConfig();if(voltar===false)closeModal();else modalCategorias();toast('Categoria excluída');
 }
@@ -1606,6 +1740,9 @@ const H={
   guardar:b=>modalTx({tipo:'aporte',metaId:b.dataset.id,sinal:1}),
   retirar:b=>modalTx({tipo:'aporte',metaId:b.dataset.id,sinal:-1}),
   limite:b=>modalLimite(b.dataset.id),
+  'plano-mes':b=>{S.ym=b.dataset.ym;render();const d=$('#pl-detalhe');if(d)d.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})},
+  'plano-cat':b=>modalPlano(b.dataset.id,b.dataset.ym),
+  'plano-copiar':b=>copiarPlano(b.dataset.ym),
   comprovante:()=>iniciarComprovante(),
   'ver-comp':b=>{const t=findTx(b.dataset.id);if(t)modalVerComp(t)}
 };
