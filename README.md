@@ -1,6 +1,8 @@
 # Finanças
 
-App pessoal de controle financeiro: despesas, receitas, checklist de contas, orçamento, contas fixas, metas e calculadora.
+App pessoal de controle financeiro: despesas, receitas, checklist de contas, planejamento de 12 meses, contas fixas, metas e calculadora.
+
+Destaques: lançar falando ou escrevendo ("mercado 89,90"), atalhos das categorias mais usadas, "quanto ainda posso gastar" no mês, gráficos e tema escuro.
 
 ## Como instalar no celular
 
