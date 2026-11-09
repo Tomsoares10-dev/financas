@@ -1,6 +1,6 @@
 // Finanças — funciona offline. Os dados ficam no aparelho (localStorage), nunca aqui.
-const VERSAO = 'financas-v6';
-const APP = ['./', 'index.html', 'manifest.json', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png', 'icons/favicon-32.png'];
+const VERSAO = 'financas-v7';
+const APP = ['./', 'index.html', 'manifest.json', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png', 'icons/favicon-32.png', 'lib/jspdf.umd.min.js'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSAO).then(c => c.addAll(APP)).then(() => self.skipWaiting()));

@@ -4,6 +4,8 @@ App pessoal de controle financeiro: despesas, receitas, checklist de contas, pla
 
 Destaques: lançar falando ou escrevendo ("mercado 89,90"), ler comprovante pela foto (no próprio aparelho), atalhos das categorias mais usadas, "quanto ainda posso gastar" no mês, gráficos, avisos de vencimento com lembrete no calendário, bloqueio com Face ID e tema escuro.
 
+Aba **Ferramentas**: "Posso comprar?" (simula uma compra antes de fazer), fluxo de caixa dia a dia, cartões e faturas, dívidas e financiamentos, análises do mês, nota de saúde financeira, reserva de emergência, comparativo entre meses, busca e filtros, fechamento do mês em PDF e contas fixas. O olho no topo esconde os valores (modo privacidade).
+
 ## Como instalar no celular
 
 1. Abra o link do app no navegador (Safari no iPhone, Chrome no Android).
@@ -19,9 +21,12 @@ Os comprovantes também ficam só no aparelho e vão junto no backup. Use **Ajus
 
 A leitura de comprovante baixa o leitor de texto (Tesseract.js, uns 7 MB) na primeira vez que é usada; depois funciona sem internet.
 
+O PDF do fechamento é gerado no próprio aparelho com a biblioteca [jsPDF](https://github.com/parallax/jsPDF) (licença MIT, cópia em `lib/LICENSE-jspdf.txt`).
+
 ## Arquivos
 
 - `index.html`: o app inteiro
 - `manifest.json`: nome, ícone e modo tela cheia
 - `sw.js`: permite abrir sem internet
 - `icons/`: ícones do app
+- `lib/`: biblioteca de PDF (jsPDF) e a licença dela
