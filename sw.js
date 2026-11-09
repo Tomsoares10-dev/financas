@@ -1,5 +1,5 @@
 // Finanças — funciona offline. Os dados ficam no aparelho (localStorage), nunca aqui.
-const VERSAO = 'financas-v4';
+const VERSAO = 'financas-v5';
 const APP = ['./', 'index.html', 'manifest.json', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png', 'icons/favicon-32.png'];
 
 self.addEventListener('install', e => {
