@@ -423,6 +423,48 @@ body{font-feature-settings:"tnum" 1}
 .voz-prev .t-receita{color:var(--pos)}.voz-prev .t-despesa{color:var(--neg)}
 .voz-prev .falta{color:var(--muted);border-style:dashed}
 
+/* avisos */
+.avisos .lista>li+li{border-top:1px solid var(--line)}
+.av-l{display:flex;align-items:center;gap:12px;padding:10px 0}
+.av-l .txt{flex:1;min-width:0}
+.av-ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;flex:none;background:var(--soft);color:var(--warn)}
+.av-ic svg{width:18px;height:18px}
+.av-ic.atrasada{color:var(--neg)}
+.navb[data-badge]{position:relative}
+.navb[data-badge]::after{content:attr(data-badge);position:absolute;top:2px;left:calc(50% + 6px);min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--neg);color:#fff;font-size:.66rem;font-weight:800;display:grid;place-items:center;line-height:1}
+.side .navb[data-badge]::after{position:static;margin-left:auto}
+.st-txt{font-weight:700}
+.st-txt.atrasada{color:var(--neg)}.st-txt.hoje,.st-txt.breve{color:var(--warn)}
+
+/* leitura de comprovante */
+.ocr-st{font-weight:600;color:var(--muted);text-align:center}
+.ocr-bar{height:6px;border-radius:3px;background:var(--soft);overflow:hidden}
+.ocr-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .25s}
+.ocr-lido{display:flex;flex-wrap:wrap;gap:8px}
+.ocr-lido span{background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-weight:600;font-size:.9rem}
+.ocr-lido .falta{color:var(--muted);border-style:dashed}
+.anexo-mini{display:flex;align-items:center;gap:12px;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--surface-2)}
+.anexo-mini img{width:44px;height:58px;object-fit:cover;border-radius:6px;background:#fff}
+.anexo-mini .txt{flex:1;min-width:0}
+.cta-dupla{display:grid;gap:10px}
+
+/* bloqueio */
+#trava{position:fixed;inset:0;z-index:90;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;padding-top:calc(24px + env(safe-area-inset-top,0px));background:radial-gradient(120% 80% at 50% 0%,var(--glow),transparent 60%),var(--bg);text-align:center}
+body.travado .app,body.travado .tabs,body.travado .fab,body.travado #modal-root{visibility:hidden}
+.tv-logo{width:64px;height:64px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-ink);box-shadow:0 10px 30px var(--glow)}
+.tv-logo svg{width:32px;height:32px}
+.tv-t{font-size:1.3rem;font-weight:800}
+.tv-pts{display:flex;gap:14px;justify-content:center;min-height:16px}
+.tv-pts i{width:14px;height:14px;border-radius:50%;border:2px solid var(--muted)}
+.tv-pts i.on{background:var(--accent);border-color:var(--accent)}
+.tv-tec{display:grid;grid-template-columns:repeat(3,72px);gap:12px;justify-content:center}
+.tv-tec button{height:64px;border-radius:50%;border:1px solid var(--line);background:var(--surface);font-size:1.5rem;font-weight:700;cursor:pointer;color:var(--ink)}
+.tv-tec button:active{background:var(--soft)}
+.tv-tec .vz{visibility:hidden}
+.tv-msg{min-height:1.4em;color:var(--neg);font-weight:600}
+@keyframes treme{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.tv-pts.erro{animation:treme .35s}
+
 /* ajustes */
 .aj-sec{display:flex;flex-direction:column;gap:10px}
 .aj-sec h3{font-size:.95rem}
@@ -575,6 +617,11 @@ const ic={
   mic:svg('<rect x="9" y="2.5" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3.5"/>'),
   rep:svg('<path d="M17 2l4 4-4 4"/><path d="M3 11V9a3 3 0 0 1 3-3h15"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a3 3 0 0 1-3 3H3"/>'),
   bolt:svg('<path d="M13 2L4.5 13.5H12L11 22l8.5-11.5H12z"/>'),
+  cam:svg('<path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/>'),
+  sino:svg('<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>'),
+  cadeado:svg('<rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>'),
+  face:svg('<path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M9 9v1.5M15 9v1.5M12 9v4.5h-1M9.5 16.5a4 4 0 0 0 5 0"/>'),
+  agenda:svg('<rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M16 2.5v4M8 2.5v4M3 10h18M12 13.5v4M10 15.5h4"/>'),
   bk:svg('<path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/>'),
   calc:svg('<rect x="5" y="2.5" width="14" height="19" rx="2.5"/><path d="M8.5 6.5h7"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01M8.5 14.5h.01M12 14.5h.01M15.5 14.5h.01M8.5 18h.01M12 18h.01M15.5 18h.01" stroke-width="2.6"/>'),
   minus:svg('<path d="M5 12h14"/>'),
@@ -583,7 +630,7 @@ const ic={
 const NAV=[['inicio','Início',ic.home],['dia','Dia a dia',ic.list],['checklist','Checklist',ic.chk],['plano','Planejamento',ic.gauge,'Plano'],['contas','Contas',ic.cal],['metas','Metas',ic.target]];
 
 /* ---------- estado ---------- */
-const novoConfig=c=>({categorias:(c&&c.categorias)||[],orcamento:(c&&c.orcamento)||{},plano:(c&&c.plano&&typeof c.plano==='object')?c.plano:{},contas:(c&&c.contas)||[],metas:(c&&c.metas)||[]});
+const novoConfig=c=>({categorias:(c&&c.categorias)||[],orcamento:(c&&c.orcamento)||{},plano:(c&&c.plano&&typeof c.plano==='object')?c.plano:{},apelidos:(c&&c.apelidos&&typeof c.apelidos==='object')?c.apelidos:{},contas:(c&&c.contas)||[],metas:(c&&c.metas)||[]});
 const S={ready:false,mode:'loading',config:novoConfig(null),months:{},view:'inicio',ym:ymHoje(),lado:'despesa'};
 
 /* ---------- armazenamento ---------- */
@@ -714,6 +761,8 @@ function chrome(){
   $('#mes-hoje').hidden=S.ym===ymHoje();
   $$('.navb').forEach(b=>{if(b.dataset.view===S.view)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
   $('#sync').textContent={loading:'Conectando…',sync:'Sincronizado com sua conta',local:'Salvo neste aparelho'}[S.mode];
+  let n=0;try{n=S.ready?avisosMes().length:0}catch(e){}
+  $$('.navb[data-view="checklist"]').forEach(b=>{if(n)b.setAttribute('data-badge',n);else b.removeAttribute('data-badge')});
 }
 
 /* ---------- componentes ---------- */
@@ -771,7 +820,7 @@ function vInicio(){
     h+='<section class="bloco painel vazio"><h2>Primeiro passo: suas categorias</h2><p>Crie as categorias das suas despesas e receitas, como mercado, aluguel ou salário. Elas organizam o Dia a dia e o Plano.</p><button class="btn" data-action="categorias">Criar categorias</button></section>';
   }
 
-  h=(S.ym===ymHoje()?blocoDisponivel(S.ym)+h:h+blocoDisponivel(S.ym))+blocoGastos(S.ym)+bloco6Meses(S.ym);
+  h=blocoAvisos()+(S.ym===ymHoje()?blocoDisponivel(S.ym)+h:h+blocoDisponivel(S.ym))+blocoGastos(S.ym)+bloco6Meses(S.ym);
   h+='<section class="bloco"><div class="bloco-h"><h2>Metas</h2>'+(S.config.metas.length?'<button class="link" data-action="nav" data-view="metas">Ver metas</button>':'')+'</div>';
   if(!S.config.metas.length)h+='<p class="nada">Crie uma meta para acompanhar quanto já guardou.</p><button class="btn-sec" data-action="nova-meta">'+ic.plus+' Criar meta</button>';
   else h+='<ul class="lista painel">'+S.config.metas.map(m=>{const g=guardado(m);return '<li><button class="orc-btn" data-action="nav" data-view="metas"><span class="orc-top"><span class="nome">'+esc(m.nome)+'</span><span class="val">'+money(g)+' <small>de '+money(m.alvo)+'</small></span></span>'+barra(g,m.alvo,'b-meta')+'</button></li>'}).join('')+'</ul>';
@@ -932,6 +981,40 @@ function chkIndex(ym){
   for(const m in S.months)for(const t of S.months[m])if(t.tipo==='despesa'&&t.catId){const ref=t.chk||t.ref||m;if(ref===ym)(idx[t.catId]=idx[t.catId]||[]).push({tx:t,ym:m})}
   return idx;
 }
+function vencInfo(c,ym){
+  if(!c.dia)return null;
+  const dR=Math.min(c.dia,diasNoMes(ym));
+  if(ym!==ymHoje())return {txt:'vence dia '+dR,cls:'',diff:null};
+  const diff=dR-Number(hoje().slice(8));
+  if(diff<0)return {txt:'atrasada há '+(-diff)+(diff===-1?' dia':' dias'),cls:'atrasada',diff};
+  if(diff===0)return {txt:'vence hoje',cls:'hoje',diff};
+  if(diff===1)return {txt:'vence amanhã',cls:'breve',diff};
+  if(diff<=3)return {txt:'vence em '+diff+' dias',cls:'breve',diff};
+  return {txt:'vence dia '+dR,cls:'',diff};
+}
+function avisosMes(){
+  const ym=ymHoje(),idx=chkIndex(ym),out=[];
+  for(const c of S.config.categorias){
+    if(c.tipo!=='despesa'||!c.dia)continue;
+    const P=idx[c.id]||[];if(P.length&&P.every(p=>isPago(p.tx)))continue;
+    const vi=vencInfo(c,ym);if(!vi||!vi.cls)continue;
+    const pend=P.filter(p=>!isPago(p.tx)).reduce((a,p)=>a+p.tx.valor,0),pv=planoVal(ym,c.id);
+    out.push({nome:c.nome,acao:'chk',id:c.id,vi,valor:pend||pv||0});
+  }
+  for(const ct of contasMes(ym)){
+    if(ct.paga||['atrasada','hoje','breve'].indexOf(ct.status)<0)continue;
+    const diff=ct.diaR-Number(hoje().slice(8));
+    out.push({nome:ct.nome,acao:'pagar-conta',id:ct.id,vi:{txt:diff<0?'atrasada há '+(-diff)+(diff===-1?' dia':' dias'):diff===0?'vence hoje':diff===1?'vence amanhã':'vence em '+diff+' dias',cls:diff<0?'atrasada':diff===0?'hoje':'breve',diff},valor:ct.valor});
+  }
+  return out.sort((a,b)=>a.vi.diff-b.vi.diff);
+}
+function blocoAvisos(){
+  if(S.ym!==ymHoje())return '';
+  const A=avisosMes();if(!A.length)return '';
+  return '<section class="bloco card-tech avisos"><div class="bloco-h"><h2>Avisos</h2><span class="dica">'+A.length+(A.length===1?' conta':' contas')+'</span></div><ul class="lista">'+A.slice(0,6).map(a=>
+    '<li class="av-l"><span class="av-ic '+a.vi.cls+'">'+ic.sino+'</span><span class="txt"><span class="t1">'+esc(a.nome)+'</span><span class="t2"><span class="st-txt '+a.vi.cls+'">'+a.vi.txt+'</span>'+(a.valor?' · '+money(a.valor):'')+'</span></span><button class="pill" data-action="'+a.acao+'" data-id="'+a.id+'">Pagar</button></li>').join('')+
+    '</ul></section>';
+}
 function vCheck(){
   const mes=mesNome(S.ym),cats=S.config.categorias.filter(c=>c.tipo==='despesa');
   let h='<div class="vh"><h1>Checklist</h1></div>';
@@ -946,10 +1029,11 @@ function vCheck(){
     if(ok){const ult=pagos.map(p=>p.tx.data).sort().pop();t2='Pago '+money(vPago)+' em '+fmtData(ult).slice(0,5)+(pagos.some(p=>p.tx.comp)?'<span class="clip" title="Com comprovante">'+ic.clip+'</span>':'')}
     else if(pend.length)t2='A pagar '+money(vPend)+(pagos.length?' ('+pagos.length+' de '+P.length+' pagas)':'');
     else t2='A pagar';
+    if(!ok){const vi=vencInfo(c,S.ym);if(vi)t2+=' · <span class="st-txt '+vi.cls+'">'+vi.txt+'</span>'}
     return '<li><button class="chk-item'+(ok?' feito':'')+'" data-action="chk" data-id="'+c.id+'" aria-label="'+esc(c.nome)+', '+(ok?'pago':'a pagar')+'"><span class="chk-box" aria-hidden="true">'+(ok?ic.check:'')+'</span><span class="txt"><span class="t1">'+esc(c.nome)+'</span><span class="t2">'+t2+'</span></span><span class="dot" style="background:'+c.cor+'"></span></button></li>';
   }).join('');
   h+='<section class="chk-res"><p class="hero-l">Despesas pagas em '+mes+'</p><p class="orc-v"><strong>'+nPagas+' de '+cats.length+'</strong></p>'+barra(nPagas,cats.length,'b-chk')+'<p class="dica">Pago: '+money(totPago)+'  |  A pagar: '+money(totPend)+'</p></section>';
-  return h+'<ul class="lista painel">'+linhas+'</ul><p class="dica topo">Toque numa despesa para marcar como paga'+(store.assets?' e anexar o comprovante':'')+'.</p>';
+  return h+'<ul class="lista painel">'+linhas+'</ul><p class="dica topo">Toque numa despesa para marcar como paga e anexar o comprovante.</p>';
 }
 
 /* ---------- planejamento ---------- */
@@ -1147,7 +1231,8 @@ function modalTx(o){
       '<p class="dica">Guardar dinheiro sai do saldo do mês. Retirar devolve para o saldo.</p>'
       :'<p class="dica">Você ainda não tem metas. <button type="button" class="link" data-action="nova-meta">Criar meta</button></p>')+'</div>'+
     '<label class="campo" data-show="despesa"><span>Pagamento</span><select name="pag">'+PAGAMENTOS.map(p=>'<option'+((tx?tx.pag===p:pre.pag===p)?' selected':'')+'>'+p+'</option>').join('')+'</select></label>'+
-    '<label class="pago-campo" data-show="despesa"><input type="checkbox" name="pago"'+(tx&&tx.tipo==='despesa'&&isPago(tx)?' checked':'')+'><span class="chk-box" aria-hidden="true">'+ic.check+'</span><span>Já está pago</span></label>'+
+    (pre.anexo?'<div class="anexo-mini" data-anexo><img src="'+pre.anexo.dataUrl+'" alt=""><span class="txt"><span class="t1">Comprovante anexado</span><span class="t2">Fica guardado neste aparelho</span></span><button type="button" class="link" data-tiraranexo>Remover</button></div>':'')+
+    '<label class="pago-campo" data-show="despesa"><input type="checkbox" name="pago"'+((tx?tx.tipo==='despesa'&&isPago(tx):!!pre.pago)?' checked':'')+'><span class="chk-box" aria-hidden="true">'+ic.check+'</span><span>Já está pago</span></label>'+
     '<label class="campo"><span>Descrição <small>(opcional)</small></span><input name="desc" maxlength="80" autocomplete="off" value="'+esc(tx?tx.desc:(pre.desc||''))+'" placeholder="Ex.: mercado do mês"></label>'+
     '<p class="data-linha" data-dlinha><span>Data: <strong>'+rotuloData(dataIni)+'</strong></span><button type="button" class="link" data-altdata>alterar</button></p>'+
     '<label class="campo" data-dcampo hidden><span>Data</span><input type="date" name="data" value="'+dataIni+'"></label>'+
@@ -1171,7 +1256,9 @@ function modalTx(o){
     };
     f.addEventListener('change',e=>{if(e.target.name==='tipo')sync();if(e.target.name==='catId'){catSel=e.target.value;const nb=f.querySelector('[data-nova]');nb.hidden=catSel!=='_nova';if(catSel==='_nova')el(f,'novaCat').focus()}});
     sync();
-    f.addEventListener('submit',e=>{
+    let anexo=pre.anexo||null;
+    const ta=f.querySelector('[data-tiraranexo]');if(ta)ta.addEventListener('click',()=>{anexo=null;f.querySelector('[data-anexo]').remove()});
+    f.addEventListener('submit',async e=>{
       e.preventDefault();
       const tp=el(f,'tipo').value,v=parseValor(el(f,'valor').value);
       if(soCategoria()){
@@ -1196,6 +1283,11 @@ function modalTx(o){
       if(tx&&tx.contaId&&tp==='despesa'){n.contaId=tx.contaId;n.ref=tx.ref||tx.data.slice(0,7);if(tx.parcela)n.parcela=tx.parcela}
       if(tx&&tx.comp)n.comp=tx.comp;
       if(tx&&tx.chk&&tp==='despesa')n.chk=tx.chk;
+      if(anexo&&!ed){
+        const bt=f.querySelector('button[type=submit]');bt.disabled=true;
+        try{n.comp=await subirComp(anexo)}catch(err){bt.disabled=false;return fail('Não foi possível guardar o comprovante neste aparelho.')}
+      }
+      if(pre.fav&&tp==='despesa'&&n.catId)aprender(pre.fav,n.catId);
       salvarTx(n,tx?tx.data.slice(0,7):null);closeModal();
       const ym=data.slice(0,7);
       const msg={despesa:ed?'Despesa atualizada':'Despesa salva',receita:ed?'Receita atualizada':'Receita salva',aporte:ed?'Movimento atualizado':'Movimento salvo'}[tp];
@@ -1234,7 +1326,8 @@ function ultimoLanc(){
 function modalEscolha(){
   const top=maisUsadas(6),u=ultimoLanc(),uc=u?catById(u.catId):null;
   openModal('<div class="form">'+cab('Lançar')+
-    '<button type="button" class="voz-cta" data-action="voz"><span class="mic">'+ic.mic+'</span><span><strong>Falar ou escrever</strong><small>Ex.: "mercado 89,90" ou "recebi comissão 5 mil"</small></span></button>'+
+    '<div class="cta-dupla"><button type="button" class="voz-cta" data-action="voz"><span class="mic">'+ic.mic+'</span><span><strong>Falar ou escrever</strong><small>Ex.: "mercado 89,90" ou "recebi comissão 5 mil"</small></span></button>'+
+    '<button type="button" class="voz-cta" data-action="ler-comp"><span class="mic">'+ic.cam+'</span><span><strong>Ler comprovante</strong><small>Foto, print ou PDF: preenche valor, data e categoria</small></span></button></div>'+
     '<div class="escolha">'+
     '<button type="button" class="esc esc-desp" data-action="nova-desp">'+ic.minus+'<span><strong>Nova despesa</strong><small>Algo que você pagou ou comprou</small></span></button>'+
     '<button type="button" class="esc esc-rec" data-action="nova-rec">'+ic.plus+'<span><strong>Nova receita</strong><small>Dinheiro que entrou</small></span></button></div>'+
@@ -1331,6 +1424,144 @@ function modalVoz(){
   });
 }
 
+/* ---------- lembretes no calendário ---------- */
+const icsTxt=t=>String(t).replace(/\\/g,'\\\\').replace(/[,;]/g,m=>'\\'+m).replace(/\n/g,'\\n');
+async function compartilharArquivo(nome,tipo,conteudo,titulo){
+  const blob=new Blob([conteudo],{type:tipo});
+  try{const file=new File([blob],nome,{type:tipo});if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:titulo});return true}}
+  catch(e){if(e&&e.name==='AbortError')return false}
+  const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=nome;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),4000);return true;
+}
+function itensLembrete(){
+  const L=[];
+  for(const c of S.config.categorias)if(c.tipo==='despesa'&&c.dia)L.push({uid:'cat-'+c.id,nome:c.nome,dia:c.dia,count:null});
+  const atual=ymHoje();
+  for(const ct of S.config.contas){
+    let count=null;
+    if(ct.tipo==='parcela'){const fim=addM(ct.inicio,ct.parcelas-1);if(fim<atual)continue;count=diffM(atual<ct.inicio?ct.inicio:atual,fim)+1}
+    L.push({uid:'conta-'+ct.id,nome:ct.nome,dia:ct.dia,count,inicio:ct.inicio>atual?ct.inicio:null});
+  }
+  return L;
+}
+async function gerarLembretes(){
+  const L=itensLembrete();
+  if(!L.length){toast('Coloque o dia de vencimento nas categorias de despesa primeiro');return}
+  const agora=new Date(),stamp=agora.getUTCFullYear()+pad(agora.getUTCMonth()+1)+pad(agora.getUTCDate())+'T'+pad(agora.getUTCHours())+pad(agora.getUTCMinutes())+'00Z';
+  const hj=hoje(),ev=[];
+  for(const it of L){
+    const d=Math.min(it.dia,28);
+    let ym=it.inicio||ymHoje();if(!it.inicio&&ym+'-'+pad(d)<hj)ym=addM(ym,1);
+    const ini=ym.replace('-','')+pad(d);
+    ev.push(['BEGIN:VEVENT','UID:'+it.uid+'@financas-tomsoares10','DTSTAMP:'+stamp,'DTSTART:'+ini+'T090000','DTEND:'+ini+'T091500',
+      'RRULE:FREQ=MONTHLY;BYMONTHDAY='+d+(it.count?';COUNT='+it.count:''),
+      'SUMMARY:'+icsTxt('Pagar '+it.nome),'DESCRIPTION:'+icsTxt('Vence dia '+it.dia+'. Abra o app Finanças para marcar como pago.'),
+      'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+icsTxt('Amanhã: pagar '+it.nome),'TRIGGER:-P1D','END:VALARM',
+      'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+icsTxt('Hoje: pagar '+it.nome),'TRIGGER:PT0M','END:VALARM','END:VEVENT'].join('\r\n'));
+  }
+  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Financas//Lembretes//PT-BR','CALSCALE:GREGORIAN','METHOD:PUBLISH','X-WR-CALNAME:Contas a pagar'].join('\r\n')+'\r\n'+ev.join('\r\n')+'\r\nEND:VCALENDAR\r\n';
+  if(await compartilharArquivo('financas-lembretes.ics','text/calendar',ics,'Lembretes de contas'))toast(L.length+(L.length===1?' lembrete pronto':' lembretes prontos')+' para o calendário');
+}
+
+/* ---------- bloqueio ---------- */
+const TRKEY='financas-trava';
+let travaTent=0,travaAte=0,saiuEm=0;
+function lerTrava(){try{const t=JSON.parse(localStorage.getItem(TRKEY)||'null');return t&&t.pin?t:null}catch(e){return null}}
+const b64u=buf=>btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const deB64u=s=>{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';const b=atob(s),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u};
+async function hashPin(pin,sal){return b64u(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(sal+':'+pin)))}
+async function faceDisponivel(){try{return !!(window.PublicKeyCredential&&PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable&&await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable())}catch(e){return false}}
+async function criarCredencial(){
+  const cred=await navigator.credentials.create({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),rp:{name:'Finanças'},user:{id:crypto.getRandomValues(new Uint8Array(16)),name:'financas',displayName:'Finanças'},
+    pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],authenticatorSelection:{authenticatorAttachment:'platform',userVerification:'required',residentKey:'discouraged'},timeout:60000,attestation:'none'}});
+  return b64u(cred.rawId);
+}
+async function checarFace(id){
+  await navigator.credentials.get({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),allowCredentials:[{type:'public-key',id:deB64u(id),transports:['internal']}],userVerification:'required',timeout:60000}});
+  return true;
+}
+function travar(){
+  const t=lerTrava();if(!t||document.body.classList.contains('travado'))return;
+  closeModal();document.body.classList.add('travado');
+  let pin='';
+  const raiz=document.createElement('div');raiz.id='trava';raiz.setAttribute('role','dialog');raiz.setAttribute('aria-modal','true');raiz.setAttribute('aria-label','App bloqueado');
+  raiz.innerHTML='<div class="tv-logo">'+ic.cadeado+'</div><p class="tv-t">Finanças bloqueado</p>'+
+    (t.cred?'<button type="button" class="btn" data-tvface>'+ic.face+' Desbloquear com Face ID</button>':'')+
+    '<p class="dica">'+(t.cred?'Ou digite seu PIN':'Digite seu PIN')+'</p><div class="tv-pts" data-pts aria-hidden="true">'+'<i></i>'.repeat(t.pin.n)+'</div><p class="tv-msg" data-msg aria-live="assertive"></p>'+
+    '<div class="tv-tec">'+['1','2','3','4','5','6','7','8','9','','0','⌫'].map(k=>'<button type="button" data-k="'+k+'"'+(k===''?' class="vz" tabindex="-1" aria-hidden="true"':'')+(k==='⌫'?' aria-label="Apagar"':'')+'>'+k+'</button>').join('')+'</div>'+
+    '<button type="button" class="link" data-esqueci>Esqueci o PIN</button>';
+  document.body.appendChild(raiz);
+  const pts=raiz.querySelector('[data-pts]'),msg=raiz.querySelector('[data-msg]');
+  const pintar=()=>$$('i',pts).forEach((x,i)=>x.classList.toggle('on',i<pin.length));
+  const abrir=()=>{document.body.classList.remove('travado');raiz.remove();travaTent=0;document.removeEventListener('keydown',tecla,true)};
+  const conferir=async()=>{
+    if(Date.now()<travaAte){msg.textContent='Aguarde alguns segundos e tente de novo.';pin='';pintar();return}
+    const h=await hashPin(pin,t.pin.sal);
+    if(h===t.pin.h)return abrir();
+    travaTent++;pin='';pintar();pts.classList.remove('erro');void pts.offsetWidth;pts.classList.add('erro');
+    if(travaTent>=5){travaAte=Date.now()+30000;travaTent=0;msg.textContent='Muitas tentativas. Aguarde 30 segundos.'}else msg.textContent='PIN incorreto.';
+  };
+  const digitar=k=>{msg.textContent='';if(k==='⌫'){pin=pin.slice(0,-1);pintar();return}if(!/^\d$/.test(k)||pin.length>=t.pin.n)return;pin+=k;pintar();if(pin.length===t.pin.n)conferir()};
+  const tecla=e=>{if(/^\d$/.test(e.key)){e.preventDefault();digitar(e.key)}else if(e.key==='Backspace'){e.preventDefault();digitar('⌫')}};
+  document.addEventListener('keydown',tecla,true);
+  raiz.querySelector('.tv-tec').addEventListener('click',e=>{const b=e.target.closest('[data-k]');if(b&&b.dataset.k)digitar(b.dataset.k)});
+  const bf=raiz.querySelector('[data-tvface]');
+  if(bf)bf.addEventListener('click',async()=>{try{await checarFace(t.cred);abrir()}catch(e){msg.textContent='Face ID não confirmou. Use o PIN.'}});
+  raiz.querySelector('[data-esqueci]').addEventListener('click',()=>esqueciPin(raiz));
+  (bf||raiz.querySelector('[data-k="1"]')).focus();
+}
+function esqueciPin(raiz){
+  const box=document.createElement('div');box.className='sheet sheet-c';box.style.cssText='position:relative;text-align:left;max-width:420px';
+  box.innerHTML='<h2>Esqueceu o PIN?</h2><p class="dica" style="margin:8px 0 12px">Sem o PIN ou o Face ID não dá pra abrir os dados, essa é a proteção. A única saída é apagar os dados deste aparelho e depois importar o seu último backup.</p>'+
+    '<label class="campo"><span>Para apagar, escreva APAGAR</span><input data-conf autocomplete="off" autocapitalize="characters"></label>'+
+    '<div class="acoes" style="margin-top:12px"><button type="button" class="btn-sec" data-volta>Voltar</button><button type="button" class="btn-perigo-cheio" data-apaga disabled>Apagar dados</button></div>';
+  raiz.querySelectorAll(':scope>*').forEach(x=>x.hidden=true);raiz.appendChild(box);
+  const inp=box.querySelector('[data-conf]'),ap=box.querySelector('[data-apaga]');
+  inp.addEventListener('input',()=>{ap.disabled=inp.value.trim().toUpperCase()!=='APAGAR'});
+  box.querySelector('[data-volta]').addEventListener('click',()=>{box.remove();raiz.querySelectorAll(':scope>*').forEach(x=>x.hidden=false)});
+  ap.addEventListener('click',async()=>{
+    try{[LKEY,TRKEY,BKEY].forEach(k=>localStorage.removeItem(k))}catch(e){}
+    try{await IDB.limpar()}catch(e){}
+    location.reload();
+  });
+  inp.focus();
+}
+function modalTrava(){
+  const t=lerTrava();
+  if(t){
+    openModal('<form class="form" novalidate>'+cab('Bloqueio')+'<p class="dica">O app pede '+(t.cred?'Face ID ou ':'')+'PIN ao abrir e quando volta depois de 1 minuto fora.</p>'+
+      '<label class="campo"><span>Digite o PIN atual para desligar</span><input name="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="6" data-foco></label><p class="erro" role="alert" hidden></p>'+
+      '<div class="acoes"><button type="button" class="btn-sec" data-close>Cancelar</button><button class="btn-perigo-cheio" type="submit">Desligar bloqueio</button></div></form>',
+    sheet=>{const f=sheet.querySelector('form'),fail=erroForm(f);f.addEventListener('submit',async e=>{e.preventDefault();if(await hashPin(el(f,'pin').value.trim(),t.pin.sal)!==t.pin.h)return fail('PIN incorreto.');try{localStorage.removeItem(TRKEY)}catch(x){}closeModal();toast('Bloqueio desligado')})});
+    return;
+  }
+  faceDisponivel().then(temFace=>{
+    openModal('<form class="form" novalidate>'+cab('Ativar bloqueio')+
+      '<div class="bk-info"><strong>Antes de ativar, faça um backup.</strong>Se esquecer o PIN e o Face ID não funcionar, a única saída é apagar os dados deste aparelho e importar o backup.</div>'+
+      '<button type="button" class="btn-sec" data-action="backup">'+ic.bk+' Fazer backup agora</button>'+
+      '<div class="duas"><label class="campo"><span>Crie um PIN (4 a 6 números)</span><input name="p1" type="password" inputmode="numeric" autocomplete="new-password" maxlength="6"></label>'+
+      '<label class="campo"><span>Repita o PIN</span><input name="p2" type="password" inputmode="numeric" autocomplete="new-password" maxlength="6"></label></div>'+
+      (temFace?'<label class="pago-campo"><input type="checkbox" name="face" checked><span class="chk-box" aria-hidden="true">'+ic.check+'</span><span>Usar Face ID ou digital para desbloquear</span></label>':'<p class="dica">Face ID não está disponível neste navegador; o bloqueio vai usar só o PIN.</p>')+
+      '<p class="dica">Protege o app contra quem pegar o seu celular desbloqueado. Os dados continuam só neste aparelho.</p>'+
+      '<p class="erro" role="alert" hidden></p><div class="acoes"><button type="button" class="btn-sec" data-close>Cancelar</button><button class="btn" type="submit">'+ic.cadeado+' Ativar bloqueio</button></div></form>',
+    sheet=>{
+      const f=sheet.querySelector('form'),fail=erroForm(f);
+      f.addEventListener('submit',async e=>{
+        e.preventDefault();
+        const p1=el(f,'p1').value.trim(),p2=el(f,'p2').value.trim();
+        if(!/^\d{4,6}$/.test(p1))return fail('O PIN precisa ter de 4 a 6 números.');
+        if(p1!==p2)return fail('Os dois PINs não são iguais.');
+        let cred=null;
+        if(el(f,'face')&&el(f,'face').checked){try{cred=await criarCredencial()}catch(x){return fail('O Face ID não foi configurado. Tente de novo ou desmarque a opção para usar só o PIN.')}}
+        const sal=b64u(crypto.getRandomValues(new Uint8Array(16)));
+        const t2={pin:{sal,h:await hashPin(p1,sal),n:p1.length},cred};
+        try{localStorage.setItem(TRKEY,JSON.stringify(t2))}catch(x){return fail('Não foi possível salvar o bloqueio neste aparelho.')}
+        closeModal();toast('Bloqueio ativado'+(cred?' com Face ID':''));
+      });
+    });
+  });
+}
+document.addEventListener('visibilitychange',()=>{if(document.hidden)saiuEm=Date.now();else if(saiuEm&&Date.now()-saiuEm>60000&&lerTrava())travar()});
+
 /* ---------- ajustes ---------- */
 const TKEY='financas-tema';
 let tMedia=null;
@@ -1349,6 +1580,8 @@ function modalAjustes(){
     '<section class="aj-sec"><h3>Aparência</h3><fieldset class="seg"><legend class="sr">Tema</legend>'+
       [['escuro','Escuro'],['claro','Claro'],['auto','Automático']].map(([v,l])=>'<label><input type="radio" name="tema" value="'+v+'"'+(p===v?' checked':'')+'><span>'+l+'</span></label>').join('')+
     '</fieldset></section>'+
+    '<section class="aj-sec"><h3>Segurança</h3><div class="aj-l"><button type="button" class="btn-sec" data-action="trava">'+ic.cadeado+' '+(lerTrava()?'Bloqueio ativado (desligar)':'Ativar bloqueio com Face ID')+'</button></div></section>'+
+    '<section class="aj-sec"><h3>Avisos</h3><div class="aj-l"><button type="button" class="btn-sec" data-action="lembretes">'+ic.agenda+' Lembretes no calendário do celular</button></div><p class="dica">Usa o dia de vencimento das categorias de despesa e das contas. Avisa um dia antes e no dia.</p></section>'+
     '<section class="aj-sec"><h3>Dados</h3><div class="aj-l">'+
       '<button type="button" class="btn-sec" data-action="backup">'+ic.bk+' Backup: exportar e importar</button>'+
       '<button type="button" class="btn-sec" data-action="categorias">'+ic.tag+' Categorias</button>'+
@@ -1379,21 +1612,24 @@ function modalCategoria(cat,opt){
   openModal('<form class="form" novalidate>'+cab(ed?'Editar categoria':'Nova categoria')+
     (ed?'<p class="dica">Categoria de '+(cat.tipo==='despesa'?'despesa':'receita')+'</p>':'<fieldset class="seg"><legend class="sr">Tipo</legend><label><input type="radio" name="tipo" value="despesa"'+(tipoIni==='despesa'?' checked':'')+'><span>Despesa</span></label><label><input type="radio" name="tipo" value="receita"'+(tipoIni==='receita'?' checked':'')+'><span>Receita</span></label></fieldset>')+
     '<label class="campo"><span>Nome</span><input name="nome" maxlength="40" autocomplete="off" value="'+esc(cat?cat.nome:'')+'" placeholder="Ex.: mercado, salário" data-foco></label>'+
+    '<label class="campo" data-diacampo'+((ed?cat.tipo:tipoIni)==='despesa'?'':' hidden')+'><span>Vence no dia <small>(opcional, para avisos)</small></span><input name="dia" type="number" inputmode="numeric" min="1" max="31" placeholder="Ex.: 10" value="'+(cat&&cat.dia?cat.dia:'')+'"></label>'+
     '<fieldset class="cores"><legend>Cor</legend>'+CORES.map(c=>'<label><input type="radio" name="cor" value="'+c+'"'+(c===corIni?' checked':'')+' aria-label="Cor '+c+'"><span style="background:'+c+'"></span></label>').join('')+'</fieldset>'+
     '<p class="erro" role="alert" hidden></p>'+
     '<div class="acoes">'+(ed?'<button type="button" class="btn-perigo" data-del>Excluir</button>':'')+'<button type="button" class="btn-sec" data-voltar>'+(voltar?'Voltar':'Cancelar')+'</button><button class="btn" type="submit">'+(ed?'Salvar alterações':'Criar categoria')+'</button></div></form>',
   sheet=>{
     const f=sheet.querySelector('form'),fail=erroForm(f);
     f.querySelector('[data-voltar]').addEventListener('click',()=>voltar?modalCategorias():closeModal());
+    f.addEventListener('change',e=>{if(e.target.name==='tipo')f.querySelector('[data-diacampo]').hidden=e.target.value!=='despesa'});
     const del=f.querySelector('[data-del]');if(del)del.addEventListener('click',()=>excluirCategoria(cat.id,voltar));
     f.addEventListener('submit',e=>{
       e.preventDefault();
       const nome=el(f,'nome').value.trim();if(!nome)return fail('Dê um nome para a categoria.');
       const tipo=ed?cat.tipo:el(f,'tipo').value;
       if(S.config.categorias.some(c=>c.tipo===tipo&&c.nome.toLowerCase()===nome.toLowerCase()&&(!ed||c.id!==cat.id)))return fail('Já existe uma categoria com esse nome.');
-      const cor=el(f,'cor').value||corIni;
-      if(ed){const c=catById(cat.id);c.nome=nome;c.cor=cor}
-      else S.config.categorias.push({id:uid(),nome,tipo,cor});
+      const cor=el(f,'cor').value||corIni,dRaw=el(f,'dia').value.trim();let dia=null;
+      if(tipo==='despesa'&&dRaw){dia=parseInt(dRaw,10);if(!(dia>=1&&dia<=31))return fail('O dia de vencimento vai de 1 a 31.')}
+      if(ed){const c=catById(cat.id);c.nome=nome;c.cor=cor;if(dia)c.dia=dia;else delete c.dia}
+      else{const c={id:uid(),nome,tipo,cor};if(dia)c.dia=dia;S.config.categorias.push(c)}
       salvarConfig();if(voltar)modalCategorias();else closeModal();toast(ed?'Categoria atualizada':'Categoria criada');
     });
   });
@@ -1536,7 +1772,21 @@ function modalMeta(meta){
 let compCtl=null,pdfP=null;
 const leituraOK=()=>!!(store.sample&&store.imgOK&&!store.sampleOff);
 const fmtData=ds=>ds.split('-').reverse().join('/');
-function apagarComp(comp){if(!comp||!store.assets)return;store.assets.delete(comp.id).catch(()=>{});if(comp.prev)store.assets.delete(comp.prev).catch(()=>{})}
+const IDB={
+  p:null,
+  abrir(){if(!this.p)this.p=new Promise((res,rej)=>{const r=indexedDB.open('financas',1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains('comp'))r.result.createObjectStore('comp')};r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}).catch(e=>{this.p=null;throw e});return this.p},
+  async op(modo,fn){const db=await this.abrir();return new Promise((res,rej)=>{const tx=db.transaction('comp',modo),rq=fn(tx.objectStore('comp'));tx.oncomplete=()=>res(rq?rq.result:undefined);tx.onerror=()=>rej(tx.error);tx.onabort=()=>rej(tx.error)})},
+  put(id,b){return this.op('readwrite',st=>st.put(b,id))},
+  get(id){return this.op('readonly',st=>st.get(id))},
+  del(id){return this.op('readwrite',st=>st.delete(id))},
+  limpar(){return this.op('readwrite',st=>st.clear())},
+  async tudo(){const db=await this.abrir();return new Promise((res,rej)=>{const out=[],tx=db.transaction('comp','readonly'),cur=tx.objectStore('comp').openCursor();cur.onsuccess=()=>{const c=cur.result;if(c){out.push([c.key,c.value]);c.continue()}};tx.oncomplete=()=>res(out);tx.onerror=()=>rej(tx.error)})}
+};
+function apagarComp(comp){
+  if(!comp)return;
+  if(comp.local){IDB.del(comp.id).catch(()=>{});return}
+  if(!store.assets)return;store.assets.delete(comp.id).catch(()=>{});if(comp.prev)store.assets.delete(comp.prev).catch(()=>{});
+}
 function loadScript(src){return new Promise((res,rej)=>{const sc=document.createElement('script');sc.src=src;sc.onload=res;sc.onerror=()=>rej(new Error('script'));document.head.appendChild(sc)})}
 function carregarPdf(){
   if(!pdfP)pdfP=(async()=>{
@@ -1574,6 +1824,146 @@ async function imagemParaJpeg(file,max){
   if(img.close)img.close();
   return await canvasJpeg(cv);
 }
+/* ---------- leitura no aparelho ---------- */
+const TESS_URL='https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
+let tessP=null;
+function carregarTess(){
+  if(!tessP)tessP=loadScript(TESS_URL).then(()=>{if(!window.Tesseract)throw new Error('tess');return window.Tesseract}).catch(e=>{tessP=null;throw e});
+  return tessP;
+}
+async function prepOCR(blob){
+  const img=await decodificar(blob);const w=img.naturalWidth||img.width,h=img.naturalHeight||img.height;
+  const k=Math.max(1,Math.min(3,1400/w,6000/h));
+  const cv=document.createElement('canvas');cv.width=Math.round(w*k);cv.height=Math.round(h*k);
+  const ctx=cv.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,cv.width,cv.height);ctx.imageSmoothingQuality='high';ctx.drawImage(img,0,0,cv.width,cv.height);
+  if(img.close)img.close();
+  try{
+    const d=ctx.getImageData(0,0,cv.width,cv.height),a=d.data;
+    for(let i=0;i<a.length;i+=4){let y=.299*a[i]+.587*a[i+1]+.114*a[i+2];y=y>200?255:y<70?0:(y-70)*255/130;a[i]=a[i+1]=a[i+2]=y}
+    ctx.putImageData(d,0,0);
+  }catch(e){}
+  return cv;
+}
+async function lerTextoImagem(blob,prog){
+  prog('Preparando o leitor (na primeira vez ele baixa uns 7 MB)…',0.05);
+  const T=await carregarTess();
+  const w=await T.createWorker('por',1,{logger:m=>{
+    if(m.status==='recognizing text')prog('Lendo o comprovante… '+Math.round((m.progress||0)*100)+'%',0.35+0.65*(m.progress||0));
+    else prog('Preparando o leitor…',0.05+0.3*(m.progress||0));
+  }});
+  try{const cv=await prepOCR(blob);const r=await w.recognize(cv);return (r&&r.data&&r.data.text)||''}
+  finally{try{await w.terminate()}catch(e){}}
+}
+async function pdfTexto(file){
+  const lib=await carregarPdf();
+  const doc=await lib.getDocument({data:new Uint8Array(await file.arrayBuffer()),isEvalSupported:false,disableFontFace:true}).promise;
+  try{
+    const page=await doc.getPage(1),tc=await page.getTextContent(),rows={};
+    for(const it of tc.items){const y=Math.round(it.transform[5]/3)*3;(rows[y]=rows[y]||[]).push({x:it.transform[4],s:it.str})}
+    return Object.keys(rows).map(Number).sort((a,b)=>b-a).map(y=>rows[y].sort((a,b)=>a.x-b.x).map(i=>i.s).join(' ')).join('\n');
+  }finally{doc.destroy()}
+}
+const MESES_AB={jan:1,fev:2,mar:3,abr:4,mai:5,jun:6,jul:7,ago:8,set:9,out:10,nov:11,dez:12};
+function analisarComprovante(txt){
+  const linhas=String(txt||'').split(/\r?\n/).map(l=>l.replace(/[|_]+/g,' ').replace(/\s+/g,' ').trim()).filter(Boolean);
+  const N=linhas.map(semAcento);
+  const reV=/(?:r\s?\$|rs)?\s*(\d{1,3}(?:[.\s]\d{3})+,\s?\d{2}|\d+,\s?\d{2}|\d{1,3}(?:\.\d{3})+\.\d{2})(?!\d)/i;
+  const val=l=>{const m=l.match(reV);if(!m)return null;let x=m[1].replace(/\s/g,'');if(x.indexOf(',')<0){const i=x.lastIndexOf('.');x=x.slice(0,i).replace(/\./g,'')+','+x.slice(i+1)}return Number(x.replace(/\./g,'').replace(',','.'))};
+  const r={valor:null,data:null,fav:null,catId:null,texto:linhas.join('\n')};
+  const PRI=[/valor\s*(total\s*)?pago/,/total\s*pago/,/valor\s*total/,/valor\s*(do\s*)?pix/,/valor\s*(da|do)\s*(transferencia|transacao|pagamento|documento|boleto)/,/valor\s*(do\s*)?titulo/,/^valor\b|\bvalor\b/];
+  for(const re of PRI){
+    for(let i=0;i<N.length&&r.valor==null;i++){
+      if(!re.test(N[i])||/original|desconto|juros|multa|tarifa|encargo|abatimento/.test(N[i]))continue;
+      r.valor=val(linhas[i]);if(r.valor==null&&linhas[i+1])r.valor=val(linhas[i+1]);
+    }
+    if(r.valor!=null)break;
+  }
+  if(r.valor==null){const todos=linhas.map(val).filter(v=>v!=null);if(todos.length)r.valor=Math.max(...todos)}
+  if(r.valor!=null&&!(r.valor>0&&r.valor<10000000))r.valor=null;
+  const dataDe=l=>{
+    let m=l.match(/(\d{1,2})\s*\/\s*(\d{1,2})\s*\/\s*(\d{4}|\d{2})(?!\d)/);
+    if(m){const y=m[3].length===2?2000+Number(m[3]):Number(m[3]);return y+'-'+pad(Number(m[2]))+'-'+pad(Number(m[1]))}
+    m=semAcento(l).match(/(\d{1,2})\s*(?:de\s*)?(jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez)[a-z]*\.?\s*(?:de\s*)?(\d{4})/);
+    if(m)return m[3]+'-'+pad(MESES_AB[m[2]])+'-'+pad(Number(m[1]));
+    return null;
+  };
+  const okData=d=>{if(!d)return false;const [y,mo,dd]=d.split('-').map(Number);return y>=2020&&y<=2100&&mo>=1&&mo<=12&&dd>=1&&dd<=31&&d<=addDias(hoje(),1)};
+  const PD=[/data\s*(do|de)\s*pagamento/,/pago\s*em|realizad|efetuad/,/data\s*(da|de)?\s*(transacao|transferencia)|data\s*\/\s*hora/,/\bdata\b/];
+  for(const re of PD){
+    for(let i=0;i<N.length&&!r.data;i++){if(!re.test(N[i])||/vencimento/.test(N[i]))continue;let d=dataDe(linhas[i]);if(!d&&linhas[i+1])d=dataDe(linhas[i+1]);if(okData(d))r.data=d}
+    if(r.data)break;
+  }
+  if(!r.data)for(const l of linhas){const d=dataDe(l);if(okData(d)){r.data=d;break}}
+  const reF=/^(nome\s*(do|da)\s*)?(destinatario|beneficiario|favorecido|recebedor)\b|^(pago|pagamento|enviado|transferido)\s*(para|a)\b|^para\b|^quem\s*recebeu\b/;
+  const rotulo=/^(cpf|cnpj|instituicao|agencia|conta|chave|tipo|banco\s*\d|data|valor|id|protocolo|documento|identificacao|descricao)/;
+  for(let i=0;i<N.length&&!r.fav;i++){
+    if(/^dados\s*d/.test(N[i])||!reF.test(N[i]))continue;
+    let resto=linhas[i].replace(/^.*?(destinat[aá]rio|benefici[aá]rio|favorecido|recebedor|para|recebeu)\s*:?\s*/i,'').replace(/\b(CPF|CNPJ)\b.*$/i,'').trim();
+    if(!/[a-zà-ú]{3}/i.test(resto)){const nx=linhas[i+1];if(nx&&!rotulo.test(semAcento(nx))&&/[a-zà-ú]{3}/i.test(nx))resto=nx.replace(/\b(CPF|CNPJ)\b.*$/i,'').trim();else resto=''}
+    if(resto)r.fav=resto.replace(/[.\s]+$/,'').slice(0,60);
+  }
+  r.catId=sugerirCat(r.fav);
+  return r;
+}
+function addDias(ds,n){const [y,m,d]=ds.split('-').map(Number);const x=new Date(y,m-1,d+n);return x.getFullYear()+'-'+pad(x.getMonth()+1)+'-'+pad(x.getDate())}
+const chaveFav=f=>semAcento(f||'').replace(/[^a-z0-9]+/g,' ').trim().split(' ').filter(w=>w.length>1).slice(0,3).join(' ');
+const GENERICAS=['credito','debito','banco','bco','financeira','financiamento','pagamento','pagamentos','servicos','ltda','cia','casa','sa'];
+function sugerirCat(fav){
+  if(!fav)return null;
+  const k=chaveFav(fav),ap=S.config.apelidos||{};
+  if(k&&ap[k]&&catById(ap[k]))return ap[k];
+  const F=semAcento(fav),toks=F.split(/[^a-z0-9]+/).filter(x=>x.length>=5);let best=null,bs=0;
+  for(const c of S.config.categorias){
+    if(c.tipo!=='despesa')continue;
+    for(const w of semAcento(c.nome).split(/[^a-z0-9]+/)){
+      if(w.length<4||GENERICAS.indexOf(w)>=0)continue;
+      const sc=F.indexOf(w)>=0?w.length*2:toks.some(x=>w.indexOf(x)>=0)?w.length*1.5:0;
+      if(sc>bs){bs=sc;best=c.id}
+    }
+  }
+  return best;
+}
+function aprender(fav,catId){
+  const k=chaveFav(fav);if(!k||!catId||!catById(catId))return;
+  if(!S.config.apelidos)S.config.apelidos={};
+  if(S.config.apelidos[k]===catId)return;
+  S.config.apelidos[k]=catId;store.write('config');
+}
+async function lerComprovante(o,prog){
+  let txt='';
+  if(o.ehPdf){try{txt=await pdfTexto(o.file)}catch(e){}}
+  if(txt.replace(/\s/g,'').length<20)txt=await lerTextoImagem(o.jpeg,prog);
+  return analisarComprovante(txt);
+}
+function fluxoComprovante(){
+  escolherArquivo(async file=>{
+    openModal('<div class="form">'+cab('Ler comprovante')+'<div class="comp-prev" data-prev><p class="dica">Abrindo o arquivo…</p></div><p class="ocr-st" data-st aria-live="polite">Abrindo o arquivo…</p><div class="ocr-bar"><i data-bar></i></div><p class="erro" role="alert" hidden></p><div class="acoes"><button type="button" class="btn-sec" data-close>Cancelar</button></div></div>');
+    const sheet=$('#modal-root .sheet'),vivo=()=>sheet.isConnected,fail=erroForm(sheet);
+    const prog=(t,k)=>{if(!vivo())return;sheet.querySelector('[data-st]').textContent=t;if(k!=null)sheet.querySelector('[data-bar]').style.width=Math.round(k*100)+'%'};
+    let o;
+    try{o=await prepararArquivo(file)}catch(e){if(vivo())fail(e.message);return}
+    if(!vivo())return;
+    sheet.querySelector('[data-prev]').innerHTML='<img src="'+o.dataUrl+'" alt="Comprovante">';
+    let r;
+    try{r=await lerComprovante(o,prog)}
+    catch(e){
+      if(!vivo())return;
+      prog(navigator.onLine===false?'Sem internet para baixar o leitor na primeira vez.':'Não consegui ler este comprovante.',0);
+      const ac=sheet.querySelector('.acoes');ac.insertAdjacentHTML('beforeend','<button type="button" class="btn" data-manual>Lançar e anexar</button>');
+      ac.querySelector('[data-manual]').addEventListener('click',()=>modalTx({tipo:'despesa',pre:{pago:true,anexo:o}}));
+      return;
+    }
+    if(!vivo())return;
+    const cat=r.catId?catById(r.catId):null,ym=ymHoje();
+    if(cat){
+      const P=chkIndex(ym)[cat.id]||[],pend=P.filter(x=>!isPago(x.tx));
+      if(!P.length||pend.length){modalChkPagar(cat,pend[0]||null,ym,{anexo:o,leitura:r});return}
+    }
+    modalTx({tipo:'despesa',pre:{valor:r.valor,data:r.data,catId:cat?cat.id:null,desc:r.fav?cap(r.fav.toLowerCase()):'',pago:true,anexo:o,fav:r.fav}});
+  });
+}
+const chipsLeitura=r=>'<div class="ocr-lido">'+(r.valor!=null?'<span>'+money(r.valor)+'</span>':'<span class="falta">valor não lido</span>')+(r.data?'<span>'+fmtData(r.data)+'</span>':'<span class="falta">data não lida</span>')+(r.fav?'<span>'+esc(r.fav)+'</span>':'')+'</div>';
+
 function contasEmAberto(){
   const idx=pagosIndex(),out=[];
   for(let d=-2;d<=1;d++){const ym=addM(S.ym,d);for(const c of contasMes(ym,idx))if(!c.paga)out.push({k:c.id+'|'+ym,c,ym})}
@@ -1593,7 +1983,8 @@ function promptComp(cands){
 function msgSample(e){const c=e&&e.code;return c==='not_granted'?'A leitura pelo Claude não foi permitida. Escolha a conta abaixo.':c==='rate_limited'?'O Claude está ocupado agora. Escolha a conta abaixo ou tente mais tarde.':c==='image_rejected'?'O Claude não conseguiu usar esta imagem. Escolha a conta abaixo.':'Não consegui ler este comprovante. Escolha a conta abaixo.'}
 function msgAsset(e){const c=e&&e.code;return c==='too_large'?'O arquivo é grande demais (limite de 20 MB).':c==='unsupported_type'?'Formato não aceito. Envie JPG, PNG ou PDF.':c==='quota_or_state'?'O espaço para comprovantes está cheio.':'Não foi possível guardar o comprovante agora. Tente de novo.'}
 async function subirComp(o){
-  const a=store.assets;if(!a)throw {code:'capability_disabled'};
+  const a=store.assets;
+  if(!a){const id='c'+uid();await IDB.put(id,o.jpeg);return {id,local:true,tipo:'img',nome:String(o.file&&o.file.name||'comprovante').slice(0,80)}}
   const nome=String(o.file.name||'comprovante').slice(0,80);
   if(o.ehPdf){
     const orig=await a.upload(o.file,{type:'application/pdf'});
@@ -1625,11 +2016,11 @@ function promptChk(cat){
     'Se a imagem não for um comprovante de pagamento, responda {"comprovante":false}.';
 }
 const SAMPLE_OFF=['not_granted','sampling_disabled','not_declared','capability_disabled','capability_removed','images_unavailable'];
-function modalChkPagar(cat,alvo,ymRef){
-  const ym=ymRef||S.ym;let anexo=null;
+function modalChkPagar(cat,alvo,ymRef,ini){
+  const ym=ymRef||S.ym;let anexo=null,favLido=null;ini=ini||{};
   openModal('<form class="form" novalidate>'+cab('Pagar: '+esc(cat.nome))+
     '<p class="dica">Checklist de '+mesNome(ym)+' de '+ym.slice(0,4)+(alvo?'. Valor previsto: '+money(alvo.tx.valor)+'.':'')+'</p>'+
-    (store.assets?'<div class="form" data-comp></div>':'')+
+    '<div class="form" data-comp></div>'+
     '<label class="campo"><span>Valor pago</span><span class="moeda"><i>R$</i><input name="valor" inputmode="decimal" autocomplete="off" placeholder="0,00" value="'+(alvo?valorInput(alvo.tx.valor):'')+'"></span></label>'+
     '<label class="campo"><span>Pagamento</span><select name="pag">'+PAGAMENTOS.map(p=>'<option'+(alvo&&alvo.tx.pag===p?' selected':'')+'>'+p+'</option>').join('')+'</select></label>'+
     '<p class="data-linha" data-dlinha><span>Data: <strong data-dtxt>hoje</strong></span><button type="button" class="link" data-altdata>alterar</button></p>'+
@@ -1647,19 +2038,28 @@ function modalChkPagar(cat,alvo,ymRef){
     });
     const pick=()=>escolherArquivo(usar);
     const botaoAnexar=()=>{if(!area)return;area.innerHTML='<button type="button" class="btn-sec" data-anexar data-foco>'+ic.clip+' Anexar comprovante <small>(opcional)</small></button>';area.querySelector('[data-anexar]').addEventListener('click',pick)};
-    async function usar(file){
+    async function usar(file,pronto){
       if(!sheet.isConnected)return;
       f.querySelector('.erro').hidden=true;
       area.innerHTML='<div class="comp-prev"><p class="dica">Abrindo o arquivo…</p></div>';
-      let o;
-      try{o=await prepararArquivo(file)}catch(e){if(!sheet.isConnected)return;botaoAnexar();return fail(e.message)}
+      let o=pronto||null;
+      if(!o){try{o=await prepararArquivo(file)}catch(e){if(!sheet.isConnected)return;botaoAnexar();return fail(e.message)}}
       if(!sheet.isConnected)return;
       anexo=o;
       area.innerHTML='<div class="comp-prev"><img src="'+o.dataUrl+'" alt="Comprovante"></div><p class="lendo" data-st aria-live="polite"></p><div class="comp-bts"><button type="button" class="link" data-trocar>Trocar comprovante</button><button type="button" class="link" data-tirar>Remover</button></div>';
       area.querySelector('[data-trocar]').addEventListener('click',pick);
       area.querySelector('[data-tirar]').addEventListener('click',()=>{anexo=null;if(compCtl){compCtl.abort();compCtl=null}botaoAnexar()});
       const st=area.querySelector('[data-st]');
-      if(!leituraOK())return;
+      if(!leituraOK()){
+        let L=o.leitura;
+        if(!L){try{L=await lerComprovante(o,t=>{if(sheet.isConnected&&anexo===o)st.textContent=t})}catch(e){if(sheet.isConnected&&anexo===o)st.textContent='Não consegui ler o comprovante. Digite o valor.';return}}
+        if(!sheet.isConnected||anexo!==o)return;
+        if(L.valor!=null&&!mexeuV)vI.value=valorInput(L.valor);
+        if(L.data)setData(L.data);
+        favLido=L.fav||null;
+        st.innerHTML='Lido no aparelho:'+chipsLeitura(L)+(L.valor==null?'<br>Confira e digite o valor.':'');
+        return;
+      }
       st.textContent='O Claude está lendo o comprovante…';
       const ctl=new AbortController();compCtl=ctl;let L=null;
       try{L=await store.sample.json(promptChk(cat),{images:o.jpeg,signal:ctl.signal})}
@@ -1678,7 +2078,7 @@ function modalChkPagar(cat,alvo,ymRef){
       const dOk=/^\d{4}-\d{2}-\d{2}$/.test(d);if(dOk)setData(d);
       st.innerHTML='Lido: '+(v>0?money(v):'valor não identificado')+(dOk?' em '+fmtData(d):'')+(L.favorecido?', para '+esc(String(L.favorecido).replace(/\.+$/,'')):'')+'.'+(L.combina===false?' <strong class="neg">Parece ser de outra despesa, confira.</strong>':'');
     }
-    botaoAnexar();
+    if(ini.anexo){ini.anexo.leitura=ini.leitura||null;usar(null,ini.anexo)}else botaoAnexar();
     f.addEventListener('submit',async e=>{
       e.preventDefault();
       const v=parseValor(vI.value);if(!(v>0))return fail('Digite o valor pago.');
@@ -1701,6 +2101,7 @@ function modalChkPagar(cat,alvo,ymRef){
         if(comp)n.comp=comp;
         salvarTx(n,null);
       }
+      if(favLido)aprender(favLido,cat.id);
       closeModal();toast(cat.nome+' marcado como pago');
     });
   });
@@ -1710,7 +2111,7 @@ function modalChkFeito(cat,P){
   openModal('<div class="form">'+cab(esc(cat.nome))+'<p class="dica">Pago no checklist de '+mesNome(ym)+' de '+ym.slice(0,4)+'</p><ul class="lista painel">'+P.map(p=>{
     const t=p.tx;
     return '<li class="linha"><button class="linha-main" data-action="edit-tx" data-id="'+t.id+'"><span class="chk-box ok" aria-hidden="true">'+ic.check+'</span><span class="txt"><span class="t1">'+money(t.valor)+'</span><span class="t2">'+fmtData(t.data)+(t.pag?', '+esc(t.pag):'')+'</span></span></button>'+
-      (t.comp?'<button class="ic-btn" data-action="ver-comp" data-id="'+t.id+'" aria-label="Ver comprovante">'+ic.clip+'</button>':(store.assets?'<button type="button" class="pill" data-anexartx="'+t.id+'">'+ic.clip+' Anexar</button>':''))+'</li>';
+      (t.comp?'<button class="ic-btn" data-action="ver-comp" data-id="'+t.id+'" aria-label="Ver comprovante">'+ic.clip+'</button>':'<button type="button" class="pill" data-anexartx="'+t.id+'">'+ic.clip+' Anexar</button>')+'</li>';
   }).join('')+'</ul>'+
     '<div class="acoes"><button type="button" class="btn-perigo" data-desmarcar>Desmarcar</button><button type="button" class="btn-sec" data-close>Fechar</button></div></div>',
   sheet=>{
@@ -1726,7 +2127,6 @@ async function desmarcarPagos(cat,P,ym){
   }
 }
 function anexarEmTx(id){
-  if(!store.assets)return;
   escolherArquivo(async file=>{
     openModal('<div class="form">'+cab('Anexar comprovante')+'<div class="comp-prev" data-prev><p class="dica">Abrindo o arquivo…</p></div><p class="erro" role="alert" hidden></p><div class="acoes"><button type="button" class="btn-sec" data-close>Cancelar</button><button type="button" class="btn" data-ok disabled>Anexar</button></div></div>');
     const sheet=$('#modal-root .sheet'),fail=erroForm(sheet);
@@ -1817,10 +2217,14 @@ function formBaixa(o){
 }
 function modalVerComp(tx){
   const c=tx.comp;if(!c)return;
-  openModal('<div class="form">'+cab('Comprovante')+'<div class="comp-prev grande"><img src="/_blob/'+esc(c.prev||c.id)+'" alt="Comprovante de '+esc(tx.desc||'pagamento')+'"></div>'+
+  openModal('<div class="form">'+cab('Comprovante')+'<div class="comp-prev grande"><img '+(c.local?'':'src="/_blob/'+esc(c.prev||c.id)+'" ')+'alt="Comprovante de '+esc(tx.desc||'pagamento')+'"></div>'+
     '<p class="dica">'+esc(tx.desc||'Pagamento')+': '+money(tx.valor)+' pagos em '+fmtData(tx.data)+'.'+(c.tipo==='pdf'?' O PDF original também está guardado.':'')+'</p>'+
     '<div class="acoes"><button type="button" class="btn-sec" data-close>Fechar</button></div></div>',
-  sheet=>{const im=sheet.querySelector('img');im.addEventListener('error',()=>{im.parentNode.innerHTML='<p class="dica">Não foi possível carregar o comprovante.</p>'})});
+  sheet=>{
+    const im=sheet.querySelector('img'),falhou=()=>{if(im.parentNode)im.parentNode.innerHTML='<p class="dica">Não foi possível carregar o comprovante.</p>'};
+    im.addEventListener('error',falhou);
+    if(c.local)IDB.get(c.id).then(b=>{if(!b)return falhou();const u=URL.createObjectURL(b);im.onload=()=>setTimeout(()=>URL.revokeObjectURL(u),1000);im.src=u}).catch(falhou);
+  });
 }
 $('#arq').addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const cb=arqCb;arqCb=null;if(cb)cb(f);else processarComprovante(f)});
 
@@ -1854,7 +2258,8 @@ function modalBackup(){
   });
 }
 async function exportarBackup(fail){
-  const dados={app:'financas',versao:1,exportado:new Date().toISOString(),config:S.config,months:S.months};
+  const dados={app:'financas',versao:2,exportado:new Date().toISOString(),config:S.config,months:S.months,comprovantes:{}};
+  try{for(const [k,b] of await IDB.tudo())if(b)dados.comprovantes[k]=await blobParaDataUrl(b)}catch(e){}
   const nome='financas-backup-'+hoje()+'.json';
   const blob=new Blob([JSON.stringify(dados,null,1)],{type:'application/json'});
   const ok=()=>{try{localStorage.setItem(BKEY,String(Date.now()))}catch(e){}closeModal();render();toast('Backup exportado')};
@@ -1881,7 +2286,11 @@ async function importarBackup(file,fail){
   if(!sim)return;
   S.config=novoConfig(d.config);
   const M={};for(const k in d.months)if(d.months[k].length)M[k]=d.months[k];
-  S.months=M;store.saveLocal();closeModal();render();toast('Backup importado: '+nNovo+' lançamentos');
+  S.months=M;store.saveLocal();
+  if(d.comprovantes&&typeof d.comprovantes==='object'){
+    try{await IDB.limpar();for(const k in d.comprovantes){const u=d.comprovantes[k];if(typeof u==='string'&&u.indexOf('data:image/')===0)await IDB.put(k,await (await fetch(u)).blob())}}catch(e){}
+  }
+  closeModal();render();toast('Backup importado: '+nNovo+' lançamentos');
 }
 
 /* ---------- calculadora ---------- */
@@ -2027,6 +2436,9 @@ const H={
   backup:()=>modalBackup(),
   ajustes:()=>modalAjustes(),
   voz:()=>modalVoz(),
+  'ler-comp':()=>fluxoComprovante(),
+  trava:()=>modalTrava(),
+  lembretes:()=>gerarLembretes(),
   rapido:b=>{const c=catById(b.dataset.id);if(c)modalTx({tipo:c.tipo,pre:{catId:c.id}})},
   repetir:()=>{const u=ultimoLanc();if(!u)return;modalTx({tipo:u.tipo,pre:{catId:catById(u.catId)?u.catId:null,valor:u.valor,pag:u.pag||null,desc:u.desc||''}})},
   g6:b=>{S.g6=Number(b.dataset.i);$$('.g6-col').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));const p=$('[data-g6info]');if(p)p.textContent=b.getAttribute('aria-label')},
@@ -2059,6 +2471,7 @@ document.addEventListener('mouseover',e=>{const b=e.target.closest&&e.target.clo
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#modal-root').hidden&&$('#confirm-root').hidden&&$('#calc-root').hidden)closeModal()});
 
 aplicarTema(lerTema());
+if(lerTrava())travar();
 shell();render();store.init();
 if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}
 try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{})}catch(e){}

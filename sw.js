@@ -1,5 +1,5 @@
 // Finanças — funciona offline. Os dados ficam no aparelho (localStorage), nunca aqui.
-const VERSAO = 'financas-v3';
+const VERSAO = 'financas-v4';
 const APP = ['./', 'index.html', 'manifest.json', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png', 'icons/favicon-32.png'];
 
 self.addEventListener('install', e => {
@@ -29,10 +29,11 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  // Fontes do Google: guarda depois da primeira vez.
-  if (url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com') {
+  // Fontes e bibliotecas externas (leitor de comprovante, PDF): guarda depois da primeira vez.
+  const externos = ['fonts.googleapis.com', 'fonts.gstatic.com', 'cdn.jsdelivr.net', 'cdnjs.cloudflare.com', 'tessdata.projectnaptha.com'];
+  if (externos.indexOf(url.hostname) >= 0) {
     e.respondWith(
-      caches.match(req).then(r => r || fetch(req).then(res => { const copia = res.clone(); caches.open(VERSAO).then(c => c.put(req, copia)); return res; }))
+      caches.match(req).then(r => r || fetch(req).then(res => { if (res.ok || res.type === 'opaque') { const copia = res.clone(); caches.open(VERSAO).then(c => c.put(req, copia)); } return res; }))
     );
     return;
   }
